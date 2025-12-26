@@ -1,0 +1,20 @@
+//994 Delete columns to make Sorted
+/**
+ * @param {string[]} strs
+ * @return {number}
+ */
+var minDeletionSize = function(strs) {
+    let n=strs.length;
+    let m=strs[0].length;
+    let c=0;
+    for(let k=0;k<m;k++){
+        for(let i=1;i<n;i++){
+            if(strs[i][k]<strs[i-1][k]){
+                c++;
+                break;
+            }
+            //else c++;
+        }
+    }
+    return c;
+};
