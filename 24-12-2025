@@ -1,0 +1,24 @@
+//3047. Apple Redistribution into boxes
+
+
+/**
+ * @param {number[]} apple
+ * @param {number[]} capacity
+ * @return {number}
+ */
+var minimumBoxes = function(apple, capacity) {
+    let n=apple.length;
+    let m=capacity.length;
+    capacity.sort((a,b)=>b-a);
+    let appleSum=0;
+    for(let i=0;i<n;i++){
+        appleSum+=apple[i];
+    }
+    let cap=0;
+    let i=0;
+    for(i=0;i<m;i++){
+        cap+=capacity[i];
+        if(cap>=appleSum)return i+1;
+    }
+    return m;
+};
