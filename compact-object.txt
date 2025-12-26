@@ -1,0 +1,15 @@
+/**
+ * @param {Object|Array} obj
+ * @return {Object|Array}
+ */
+var compactObject = function(obj) {
+    let res=Array.isArray(obj)?[]:{};
+    for(let key in obj){
+        let val=obj[key];
+        if(val){
+            if(typeof val==="object")val=compactObject(val);
+            Array.isArray(obj)?res.push(val):res[key]=val;
+        }
+    }
+    return res;
+};

@@ -1,0 +1,17 @@
+/**
+ * @param {Array} arr
+ * @param {number} depth
+ * @return {Array}
+ */
+var flat = function (arr, n) {
+    let res;
+    while(n--){
+        res=[];
+        for(let x of arr){
+            if(Array.isArray(x))res.push(...x);
+            else res.push(x);
+        }
+        arr=res;
+    }
+    return arr;
+};

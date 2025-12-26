@@ -1,0 +1,33 @@
+//2843. Minimum Penalty for a shop
+
+/**
+ * @param {string} customers
+ * @return {number}
+ */
+var bestClosingTime = function(customers) {
+    let n=customers.length;
+    let preN=[];
+    let suffY=[];
+    if(customers[0]==='N')preN[0]=1;
+    else preN[0]=0;
+
+    if(customers[n-1]=='Y')suffY[n-1]=1;
+    else suffY[n-1]=0;
+    for(let i=1;i<n;i++){
+        if(customers[i]=='N')preN[i]=preN[i-1]+1;
+        else preN[i]=preN[i-1];
+    }
+    for(let i=n-2;i>=0;i--){
+        if(customers[i]=='Y')suffY[i]=suffY[i+1]+1;
+        else suffY[i]=suffY[i+1];
+    }
+    let ans=0;
+    let p=suffY[0]; ;
+   // let p=preN[0]+suffY[0];
+    for(let i=1;i<n;i++){
+        let x=preN[i-1]+suffY[i];
+        if(x<p){ans=i;p=x;}
+    }
+     if (preN[n - 1] < p) ans = n;
+    return ans;
+};
