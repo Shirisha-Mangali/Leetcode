@@ -1,0 +1,68 @@
+ 961. N-repeated Element in Size 2N Array
+
+Problem statement: given an integer array nums with the following properties:
+
+nums.length == 2 * n.
+
+nums contains n + 1 unique elements.
+
+Exactly one element of nums is repeated n times.
+
+Return the element that is repeated n times.
+
+
+
+Leetcode Link: https://leetcode.com/problems/n-repeated-element-in-size-2n-array/?envType=daily-question&envId…
+
+
+
+//approach1 : sorting+checking
+
+
+
+var repeatedNTimes = function(nums) {
+
+   
+
+    nums.sort((a,b)=>a-b);
+
+    let n=nums.length/2;
+
+    for(let i=0;i<n+1;i++){
+
+        if(nums[i]==nums[i+1])return nums[i];
+
+    }
+
+    return nums[n+1];
+
+};
+
+
+
+
+//approach2:
+
+
+
+ Because the repeated number appears n times, in a random-looking array of size 2n:
+
+ It must appear next to itself OR with one element gap
+
+var repeatedNTimes = function(nums) {
+
+    let n=nums.length;
+
+    for(let i=0;i<n-2;i++){
+
+        if(nums[i]==nums[i+1]||nums[i]===nums[i+2])return nums[i];
+
+    }
+
+    return  nums[n-1];
+
+};
+
+
+
+
