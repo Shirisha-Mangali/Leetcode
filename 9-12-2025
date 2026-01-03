@@ -1,0 +1,25 @@
+56. Merge Intervals
+
+
+/**
+ * @param {number[][]} intervals
+ * @return {number[][]}
+ */
+var merge = function(intervals) {
+    intervals.sort((a,b)=>a[0]-b[0]);
+    let ans=[];
+    let prev=intervals[0];
+    //if(intervals.length==1)ans.push(prev);
+    for(let i=1;i<intervals.length;i++){
+        if(prev[1]>=intervals[i][0]){
+            prev[1]=Math.max(prev[1],intervals[i][1]);
+           // ans.push(prev);
+        }else{
+            ans.push(prev);
+            prev=intervals[i];
+        }
+        
+    }
+    ans.push(prev);
+    return ans;
+};
