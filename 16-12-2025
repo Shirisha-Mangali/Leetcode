@@ -1,0 +1,27 @@
+3606. Coupon Code validator
+
+/**
+ * @param {string[]} code
+ * @param {string[]} businessLine
+ * @param {boolean[]} isActive
+ * @return {string[]}
+ */
+var validateCoupons = function(code, businessLine, isActive) {
+    const regex=/^[A-Za-z0-9_]+$/;
+    const e = [], g = [], p = [], r = [];
+    const n=code.length;
+    const arr=["electronics", "grocery", "pharmacy", "restaurant"];
+    for(let i=0;i<n;i++){
+        let c=code[i];
+        let a=isActive[i];
+        let b=businessLine[i];
+        if(regex.test(c)&&arr.includes(b)&&a){
+            if(b.startsWith("e"))e.push(c);
+            if(b.startsWith("g"))g.push(c);
+            if(b.startsWith("p"))p.push(c);
+            if(b.startsWith("r"))r.push(c);
+        }
+    }
+    e.sort(); g.sort(); p.sort(); r.sort();
+    return [...e, ...g, ...p, ...r];
+};
