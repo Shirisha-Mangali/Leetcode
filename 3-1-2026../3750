@@ -1,0 +1,26 @@
+//3750. Minimum Number of Flips to Reverse Binary String
+Leetcode Link: https://leetcode.com/problems/minimum-number-of-flips-to-reverse-binary-string/?envType=problem-list-v2&envId=bit-manipulation
+/*Convert n to its binary representation
+We want to reverse that binary string
+Find the minimum number of bit flips required to make the original binary string equal to its reversed version
+
+Approach: convert the number to binary and use two pointers to compare symmetric bits. Each mismatch means two flips are required to make the string equal to its reverse
+*/
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var minimumFlips = function(n) {
+    let bin=n.toString(2);
+    let len=bin.length;
+    let l=0,r=len-1;
+    let c=0;
+    while(l<r){
+        if(bin[l]!=bin[r])c++;
+        l++;
+        r--;
+
+    }
+    return c*2;
+};
