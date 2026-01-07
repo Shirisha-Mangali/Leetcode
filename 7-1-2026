@@ -1,0 +1,46 @@
+
+3798. Largest even number
+Leetcode Link: https://leetcode.com/problems/largest-even-number/submissions/1877255351/
+/*
+You are given a string s consisting only of the characters '1' and '2'.
+
+You may delete any number of characters from s without changing the order of the remaining characters.
+
+Return the largest possible resultant string that represents an even integer. If there is no such string, return the empty string "".
+
+ 
+
+Example 1:
+
+Input: s = "1112"
+
+Output: "1112"
+
+Explanation:
+
+The string already represents the largest possible even number, so no deletions are needed.
+
+Example 2:
+
+Input: s = "221"
+
+Output: "22"
+*/
+
+
+
+
+
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var largestEven = function(s) {
+    let n=s.length;
+    let i=n-1;
+    for(i=n-1;i>=0;i--){
+        if(Number(s[i])%2==0)return s.substring(0,i+1);
+    }
+    return s.substring(0,i+1);
+};
