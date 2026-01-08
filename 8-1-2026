@@ -1,0 +1,37 @@
+12. Integer to Roman
+Leetcode link: https://leetcode.com/problems/integer-to-roman/description/
+
+/**
+ * @param {number} num
+ * @return {string}
+ */
+var intToRoman = function(num) {
+    // Ordered list of values and their Roman symbols
+    // Includes subtractive cases explicitly
+    const values = [
+        1000, 900, 500, 400,
+        100,  90,  50,  40,
+        10,   9,   5,   4,
+        1
+    ];
+    
+    const symbols = [
+        "M", "CM", "D", "CD",
+        "C", "XC", "L", "XL",
+        "X", "IX", "V", "IV",
+        "I"
+    ];
+
+    let result = "";
+
+    // Iterate through all values from largest to smallest
+    for (let i = 0; i < values.length; i++) {
+        // While current value can be subtracted from num
+        while (num >= values[i]) {
+            result += symbols[i];   // Append corresponding Roman symbol
+            num -= values[i];       // Reduce the number
+        }
+    }
+
+    return result;
+};
