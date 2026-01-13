@@ -1,0 +1,60 @@
+3794. Reverse String prefix
+
+You are given a string s and an integer k.
+
+Reverse the first k characters of s and return the resulting string.
+
+ 
+
+Example 1:
+
+Input: s = "abcd", k = 2
+
+Output: "bacd"
+
+Explanation:​​​​​​​
+
+The first k = 2 characters "ab" are reversed to "ba". The final resulting string is "bacd".
+
+
+
+/*
+rom one point (x1, y1) to (x2, y2):
+
+Horizontal distance = dx = |x2 - x1|
+
+Vertical distance = dy = |y2 - y1|
+
+How should we move optimally?
+
+We should move diagonally as much as possible (because diagonal covers both x and y in 1 second).
+
+After diagonals, move straight (horizontal or vertical).
+
+Minimum time between two points
+time = max(dx, dy)
+
+
+ Why?
+
+Diagonal moves = min(dx, dy)
+
+Remaining straight moves = |dx - dy|
+
+Total = min(dx, dy) + |dx - dy| = max(dx, dy)
+*/
+
+/**
+ * @param {number[][]} points
+ * @return {number}
+ */
+var minTimeToVisitAllPoints = function(p) {
+    let ans=0;
+    for(let i=1;i<p.length;i++){
+        ans+=Math.max(
+            Math.abs(p[i][0]-p[i-1][0]),
+            Math.abs(p[i][1]-p[i-1][1])
+        )
+    }
+    return ans;
+};
