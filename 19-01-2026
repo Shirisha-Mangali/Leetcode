@@ -1,0 +1,29 @@
+//227. Basic calculator 2
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var calculate = function(s) {
+    let num=0;
+    let stack=[];
+    let preOp='+';
+    for(let i=0;i<s.length;i++){
+        let ch=s[i];
+        //num*10 --multiple digit cases like : 13
+        //if(ch>=='0'&&ch<=='9')num=num*(ch-'0');
+        if (ch >= '0' && ch <= '9') {
+            num = num * 10 + (ch - '0');
+        }
+        if((ch < '0' || ch > '9') && ch !== ' ' || i === s.length - 1){
+            switch(preOp){
+                case '+':stack.push(num);break;
+                case '-':stack.push(-num);break;
+                case '*':stack.push(stack.pop()*num);break;
+                case '/':stack.push(parseInt(stack.pop()/num));break;
+            }
+            num=0;
+            preOp=ch;
+        }
+    }
+    return stack.reduce((a,b)=>a+b,0);
+};
