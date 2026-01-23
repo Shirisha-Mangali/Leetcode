@@ -1,0 +1,39 @@
+974. Subarray Sums divisible by k 
+Leetcode link: https://leetcode.com/problems/subarray-sums-divisible-by-k/description/
+
+
+Prefix sum:
+Let prefixSum[i] be the sum of nums[0..i]. A subarray sum nums[i..j] can be computed as: sum(i..j)=prefixSum[j]−prefixSum[i−1]
+Divisibility by k:
+For the subarray sum to be divisible by k: (prefixSum[j]−prefixSum[i−1])%k==0
+Which simplifies to: prefixSum[j]%k==prefixSum[i−1]%k
+This means we just need to count how many previous prefix sums had the same remainder modulo k.
+
+Implementation:
+Use a hashmap to keep track of counts of each remainder.
+
+
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var subarraysDivByK = function(nums, k) {
+    let count=0;
+    let map=new Map();
+    map.set(0,1);
+    let prefixSum=0;
+    for(let val of nums){
+        prefixSum+=val;
+        let rem = ((prefixSum % k) + k) % k;//to handle -ve numbers
+        if(map.get(rem)){
+            count+=map.get(rem);
+            map.set(rem,map.get(rem)+1);
+        }else{
+            map.set(rem,1);
+        }
+    }
+    return count;
+};
