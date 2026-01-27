@@ -1,0 +1,35 @@
+/*481. Magical String
+Leetcode Link: https://leetcode.com/problems/magical-string/
+Start with the base magical string s = [1, 2, 2] and count one '1' initially.
+ 
+Use a pointer i to read numbers from s; each number tells how many times to append.
+ 
+Maintain a variable num that alternates between 1 and 2 to decide what to append.
+ 
+Append num exactly s[i] times (without exceeding n) and count '1's while appending.
+ 
+Flip num, move i forward, repeat until the string length reaches n, then return the count.
+*/
+ 
+/**
+* @param {number} n
+* @return {number}
+*/
+var magicalString = function(n) {
+    const s=[1,2,2];
+    if(n==0)return 0;
+    if(n<=3)return 1;
+    let num=1;
+    let i=2;
+    let c=1;
+    while(s.length<n){
+        let repeat=s[i];
+        for(let j=0;j<repeat&&s.length<n;j++){
+            s.push(num);
+            if(num==1)c++;
+        }
+        num=num===1?2:1;
+        i++;
+    }
+    return c;
+};
