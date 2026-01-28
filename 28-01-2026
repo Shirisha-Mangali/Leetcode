@@ -1,0 +1,94 @@
+3800. Minimum cost to make 2 binary strs equal
+ 
+/*
+Step 1: Focus only on mismatches
+ 
+If s[i] === t[i], do nothing.
+Only positions where s[i] !== t[i] matter.
+ 
+Step 2: Notice there are ONLY two mismatch types
+ 
+At any mismatched index, only two cases exist:
+ 
+s = 0 , t = 1 → call this type c0
+ 
+s = 1 , t = 0 → call this type c1
+ 
+This is the key insight.
+Everything depends on how many c0 and c1 you have.
+ 
+Step 3: Understand what each operation can fix
+Operation   What it fixes
+Flip    Fixes 1 mismatch
+Swap    Fixes 1 c0 + 1 c1
+Cross swap  Helps when mismatches are unbalanced
+ 
+So the problem becomes:
+ 
+How do I optimally reduce c0 and c1 to zero at minimum cost?
+ 
+Step 4: Pair what can be paired
+ 
+If you have both c0 and c1, pair them
+ 
+Each pair can be fixed with one swap
+ 
+That’s why:
+ 
+min(c0, c1) * swapCost
+ 
+Step 5: Deal with leftovers
+ 
+After pairing:
+ 
+If mismatches remain → they are all same type
+ 
+Options:
+ 
+Flip individually
+ 
+Use cross swaps (sometimes cheaper)
+ 
+That’s why the code tries multiple strategies and picks the minimum.
+ 
+🔹 Why the solution checks multiple results
+ 
+Because no single operation is always optimal:
+ 
+Sometimes flips are cheapest
+ 
+Sometimes swaps dominate
+ 
+Sometimes cross + swap reduces cost
+ 
+So the code:
+ 
+tries all meaningful combinations and chooses the cheapest
+*/
+ 
+/**
+ * @param {string} s
+ * @param {string} t
+ * @param {number} flipCost
+ * @param {number} swapCost
+ * @param {number} crossCost
+ * @return {number}
+ */
+var minimumCost = function(s, t, flipCost, swapCost, crossCost) {
+    let c0=0;
+    let c1=0;
+    for(let i=0;i<s.length;i++){
+        if(s[i]!==t[i]){
+            if(s[i]==='0')c0++
+            else c1++;
+        }    
+    }
+    let r1=(c0+c1)*flipCost;
+    let r2=Math.min(c0,c1)*swapCost+Math.abs(c0-c1)*flipCost;
+    let diff=Math.abs(c0-c1);
+    let r3=Math.min(c0,c1)*swapCost+
+            Math.floor(diff/2)*(swapCost+crossCost)+
+            (diff%2)*flipCost;
+    return Math.min(r1,r2,r3);
+ 
+};
