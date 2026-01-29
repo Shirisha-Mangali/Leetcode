@@ -1,0 +1,19 @@
+//1877. Maximize Maximum Pair Sum in Array
+//Approach : Greedy+2 pointer
+//Leetcode link: https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/?envType=daily-question&envId=2026-01-24
+/**
+* @param {number[]} nums
+* @return {number}
+*/
+var minPairSum = function(nums) {
+    nums.sort((a,b)=>a-b);
+    let n=nums.length;
+    let l=0,r=n-1;
+    let max=nums[l]+nums[r];
+    l++;r--;
+    while(l<r){
+        max=Math.max(max,nums[l]+nums[r]);
+        l++;r--;
+    }
+    return max;
+};
