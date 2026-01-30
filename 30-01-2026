@@ -1,0 +1,59 @@
+/*
+1292. Maximum Side Length of a square with sum less than or Equal to threshold 
+Leetcode link: https://leetcode.com/problems/maximum-side-length-of-a-square-with-sum-less-than-or-equal-to-threshold/?envType=daily-question&envId=2026-01-19
+Approach : prefix sum +binary search
+ 
+First, I build a prefix sum matrix so that I can quickly calculate the sum of any square in constant time.
+ 
+Using prefix sums, the sum of any k × k square can be found using a fixed formula instead of looping every element.
+ 
+I then apply binary search on the possible square side lengths from 1 to min(rows, columns).
+ 
+For each mid value in binary search, I check whether any square of that size has a sum less than or equal to the threshold.
+ 
+If it’s possible, I try a larger size; otherwise, I reduce the size.
+ 
+The largest valid size found during this process is the final answer.
+*/
+ 
+/**
+ * @param {number[][]} mat
+ * @param {number} threshold
+ * @return {number}
+ */
+var maxSideLength = function(mat, threshold) {
+    const m = mat.length, n = mat[0].length;
+ 
+    const prefix = Array.from({ length: m + 1 }, () =>
+        Array(n + 1).fill(0)
+    );
+    for(let i=1;i<=m;i++){
+        for(let j=1;j<=n;j++){
+            prefix[i][j]=mat[i-1][j-1]+prefix[i-1][j]+prefix[i][j-1]-prefix[i-1][j-1];
+        }
+    }
+    let canForm=(k)=>{
+        for(let i=k;i<=m;i++){
+            for(let j=k;j<=n;j++){
+                let sum=prefix[i][j]-prefix[i-k][j]-prefix[i][j-k]+prefix[i-k][j-k];
+                if(sum<=threshold) return true;
+            }
+             
+        }
+       return false;
+    }
+    let l=1;
+    let h=Math.min(m,n);
+    let ans=0;
+    while(l<=h){
+        let mid = Math.floor((l + h) / 2);
+        if(canForm(mid)){
+            ans=mid;
+            l=mid+1;
+        }else{
+            h=mid-1;
+        }
+    }
+    return ans;
+};
+ 
