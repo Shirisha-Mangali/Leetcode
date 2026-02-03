@@ -1,0 +1,34 @@
+//3637. Trionic Array 1
+//Leetcode Link: https://leetcode.com/problems/trionic-array-i/description/?envType=daily-question&envId=2026-02-03
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var isTrionic = function(nums) {
+    const n = nums.length;
+    if (n < 3) return false;
+
+    let i = 1;
+
+    //  First strictly increasing part
+    while (i < n && nums[i] > nums[i - 1]) {
+        i++;
+    }
+    // must have at least one increase
+    if (i === 1) return false;
+
+    //  Strictly decreasing part
+    while (i < n && nums[i] < nums[i - 1]) {
+        i++;
+    }
+    // must have at least one decrease
+    if (i === n) return false;
+
+    //  Second strictly increasing part
+    while (i < n && nums[i] > nums[i - 1]) {
+        i++;
+    }
+
+    // must consume entire array
+    return i === n;
+};
