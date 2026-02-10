@@ -1,0 +1,29 @@
+/* 
+3719. Longest Balanced Subarray I
+Leetcode link: https://leetcode.com/problems/longest-balanced-subarray-i/
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var longestBalanced = function(nums) {
+    let n=nums.length;
+    let len=0;
+    for(let l=0;l<n;l++){
+        let evn=new Map();
+       let odd=new Map();
+        for(let r=l;r<n;r++){
+           if(nums[r]%2==0){
+            if(evn.has(nums[r]))evn.set(nums[r],evn.get(nums[r])+1);
+            else evn.set(nums[r],0);
+           }
+           else {
+            if(odd.has(nums[r]))odd.set(nums[r],odd.get(nums[r])+1);
+            else odd.set(nums[r],0);
+           }
+           
+            if(evn.size===odd.size)len=Math.max(len,r-l+1);
+        }
+    }
+    return len;
+};
