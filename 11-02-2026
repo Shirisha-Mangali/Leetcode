@@ -1,0 +1,23 @@
+/*
+3833. Count Dominant Indices
+Leetcode Link: https://leetcode.com/problems/count-dominant-indices/
+Complexity:
+    Time: O(n)
+    Space: O(1)
+*/
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var dominantIndices = function(nums) {
+    let n=nums.length;
+    let sum=0;
+    let c=0;
+    for(let i=n-2;i>=0;i--){
+        sum+=nums[i+1];
+        let avg=sum/(n-i-1);
+        if(nums[i]>avg)c++;
+    }
+    return c;
+};
+ 
