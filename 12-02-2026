@@ -1,0 +1,45 @@
+/*
+3834. Merge Adjacent Equal Elements 
+Leetcode Link: https://leetcode.com/problems/merge-adjacent-equal-elements/
+
+We process the array from left to right because merging depends on adjacent elements.
+
+At each step, we only need to compare the current number with the last processed number.
+
+A stack is ideal since it lets us easily check, remove (pop), and update the last element.
+
+If the current number equals the stack’s top, we merge them (sum) and check again for possible chain merges.
+
+Finally, the stack contains the fully merged result.
+
+Complexity
+
+Time: O(n)
+Space: O(n)
+
+Each element pushed and popped at most once.
+
+
+*/
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var mergeAdjacent = function(nums) {
+    let stack=[];
+    let n=nums.length;
+    for(let i=0;i<n;i++){
+        if(stack.length===0||stack[stack.length-1]!==nums[i]){
+            stack.push(nums[i]);
+        }else{
+            let sum=nums[i]+stack.pop();
+            while(!(stack.length === 0 )&& sum==stack[stack.length-1]){
+                sum=stack[stack.length-1]+stack.pop();
+                //if(stack.length>0)prev=stack[stack.length-1];
+            }
+            stack.push(sum);
+        }
+    }
+    return stack;
+
+};
