@@ -1,0 +1,46 @@
+/*
+3827. Count Monobit Integers
+Leetcode link: https://leetcode.com/problems/count-monobit-integers/
+Approach:
+Numbers whose binary representation has all bits set to 1 are exactly the numbers of the form
+2 pow k −1
+ 
+Examples:
+ 
+1   → 1        (2¹ − 1)
+3   → 11       (2² − 1)
+7   → 111      (2³ − 1)
+15  → 1111     (2⁴ − 1)
+ 
+These are called monobit / all-ones numbers.
+ 
+Why does 2^k - 1 give all 1s?
+ 
+2^k in binary is 1 followed by k zeros
+ 
+2^4 = 10000
+ 
+ 
+Subtracting 1 flips all trailing zeros to 1
+ 
+10000 - 1 = 01111
+ 
+ 
+So the result has exactly k ones.
+*/
+ 
+/**
+* @param {number} n
+* @return {number}
+*/
+var countMonobit = function(n) {
+    if(n==0)return 1;
+    if(n==1)return 2;
+    let c=0;
+    let a=0;
+    for(let k=1;a<=n;k++){
+        a=Math.pow(2,k)-1;
+        c++;
+    }
+    return c;
+};
