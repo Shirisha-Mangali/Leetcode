@@ -1,0 +1,72 @@
+## 1011. Capacity to check packages within D days.
+## Leetcode link: https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/
+
+The problem asks for the minimum ship capacity to finish within given days.
+Whenever we see “minimum possible value”, that hints toward searching over answers.
+
+The capacity has a monotonic behavior:
+
+If a certain capacity works,
+
+Any larger capacity will also work.
+This monotonic property allows Binary Search.
+
+The capacity range is obvious:
+
+Minimum = max(weights) (must carry heaviest package)
+
+Maximum = sum(weights) (ship all in one day)
+
+So instead of guessing randomly, we binary search this range and check feasibility.
+
+## Approach
+
+Set low = max(weights) and high = sum(weights).
+
+While low <= high, pick mid as possible capacity.
+
+Simulate shipping greedily and count how many days are needed.
+
+If required days ≤ given days → try smaller capacity (high = mid - 1).
+
+Otherwise → increase capacity (low = mid + 1).
+
+Return low as the minimum valid capacity.
+
+## Complexity
+
+Time: O(n log(sum))
+
+Space: O(1)
+
+
+
+/**
+ * @param {number[]} weights
+ * @param {number} days
+ * @return {number}
+ */
+var shipWithinDays = function(weights, days) {
+    let n=weights.length;
+    let low=Math.max(...weights);
+    let high= weights.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+    }, 0);
+      
+    while(low<=high){
+        let sum=0;
+        let c=1;
+        let mid = Math.floor((low + high) / 2);
+        for(let i=0;i<n;i++){
+            if(sum+weights[i]>mid){
+                sum=weights[i];
+                c++;
+            }else{
+                sum+=weights[i];
+            }
+        }
+        if(c<=days)high=mid-1;
+        else low=mid+1;
+    }
+    return low;
+};
