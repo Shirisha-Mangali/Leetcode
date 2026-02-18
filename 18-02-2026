@@ -1,0 +1,62 @@
+//Maximum Score
+//Code Chef link: https://www.codechef.com/problems/MXSCWN
+
+//Approach:
+If there were no restriction, Chef would win all matches since Ai ≥Bi, giving total = sum of all 𝐴𝑖.
+
+But he must lose at least one match, so he cannot take all 𝐴𝑖.
+
+Losing at match i reduces his total by 𝐴𝑖−𝐵𝑖
+
+To maximize coins, he should lose the match where this loss (𝐴𝑖−𝐵𝑖) is minimum.
+So, answer = sum(A[i]) − minimum(A[i] − B[i]).
+
+This works because we minimize the mandatory penalty while keeping everything else optimal.​
+
+
+
+//solution: 
+const readline = require("readline");
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+let input = [];
+
+rl.on("line", function(line) {
+    input.push(line.trim());
+});
+
+rl.on("close", function() {
+
+    let index = 0;
+    let t = Number(input[index++]);
+
+    while (t-- > 0) {
+
+        let n = Number(input[index++]);
+
+        let A = input[index++].split(" ").map(Number);
+        let B = input[index++].split(" ").map(Number);
+
+        let diff = A[0] - B[0];
+        let sum = A[0];
+        let idx = 0;
+
+        for (let i = 1; i < n; i++) {
+            sum += A[i];
+
+            if ((A[i] - B[i]) < diff) {
+                diff = A[i] - B[i];
+                idx = i;
+            }
+        }
+
+        sum -= A[idx];
+        sum += B[idx];
+
+        console.log(sum);
+    }
+});
