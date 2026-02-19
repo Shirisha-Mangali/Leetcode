@@ -1,0 +1,37 @@
+# 696. Count Binary Substrings
+
+#Leetcode Link: https://leetcode.com/problems/count-binary-substrings/description/?envType=daily-question&envId=2026-02-19
+
+#Approach: 
+The substring must have equal 0s and 1s and they must be grouped consecutively, so valid substrings can only occur between two adjacent groups like 000111 or 01.
+
+This suggests we should first count lengths of consecutive character groups (e.g., 2,2,2,2).
+
+Between every two adjacent groups, the number of valid substrings depends on how many pairs we can form.
+
+The number of such substrings is limited by the smaller group, so we add min(prevGroup, currGroup).
+
+Summing this for all adjacent groups gives the total count in O(n) time.
+
+
+#solution:
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var countBinarySubstrings = function(s) {
+    let n=s.length;
+    let p=0;
+    let c=1;
+    let res=0;
+    for(let i=1;i<n;i++){
+        if(s[i]===s[i-1])c++;
+        else{
+            res+=Math.min(c,p);
+            p=c;
+            c=1;
+        }
+    }
+    res+=Math.min(c,p);
+    return res;
+};
