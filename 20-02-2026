@@ -1,0 +1,44 @@
+## 693.Binary Number with Alternating Bits
+#Leetcode link:https://leetcode.com/problems/binary-number-with-alternating-bits/description/?envType=daily-question&envId=2026-02-18
+
+
+/*
+
+##Intuition:
+If a number has alternating bits (like 101010...), then shifting it right by 1 bit will create an opposite pattern.
+
+When we XOR the number with its right-shifted version:
+
+x = n ^ (n >> 1)
+If the bits were perfectly alternating, the result will be a sequence of all 1s (e.g., 11111...).
+
+A number that is all 1s has a special property:
+
+x & (x + 1) == 0
+This works because adding 1 to a sequence of all 1s produces a power of two, and ANDing them gives 0.
+
+##Approach:
+Compute x = n ^ (n >> 1)
+Check whether x is of the form 111...111 using:
+(x & (x + 1)) == 0
+If true → n has alternating bits.
+Otherwise → it does not.
+This avoids looping and works in constant time.
+
+
+Complexity
+Time complexity: O(1)
+Space complexity: O(1)
+
+*/
+
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var hasAlternatingBits = function(n) {
+    let x=n^(n>>1);
+    console.log(x);
+    return (x&(x+1))===0;
+};
+
