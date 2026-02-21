@@ -1,0 +1,86 @@
+## 343. Intger Break
+## Leetcode Link: https://leetcode.com/problems/integer-break/
+##Intuition:
+
+We want to break n into at least 2 positive integers such that their product is maximum.
+
+Key mathematical insight:
+
+Breaking into larger numbers does NOT maximize product.
+
+Breaking into smaller equal parts increases product.
+
+Among all numbers, 3 gives the maximum multiplication growth.
+
+Example:
+
+2 + 2 + 2 = 6 → product = 8
+3 + 3 = 6 → product = 9  ✅ bigger
+
+So we prefer breaking into as many 3s as possible.
+
+ Why 3 is Optimal?
+
+Mathematically:
+
+3 × (n-3) gives better product than 2 × (n-2)
+
+Also, breaking numbers > 4 is always beneficial
+
+But breaking 4 into 2+2 is fine (product stays 4)
+
+So the rule becomes:
+
+ Keep taking 3
+ Handle remainder carefully
+
+## Approach
+
+If n == 2 → return 1
+
+If n == 3 → return 2
+(Because at least 2 numbers are required)
+
+Divide n by 3:
+
+x = floor(n / 3)
+rem = n % 3
+
+Handle remainder:
+
+If rem == 0 → answer = 3^x
+
+If rem == 1 → convert one 3 + 1 into 2 + 2
+(because 3×1 = 3 but 2×2 = 4 → better)
+→ reduce x by 1 and multiply by 4
+
+If rem == 2 → multiply by 2
+
+##Complexity
+
+Time: O(1) (just math operations)
+
+Space: O(1)
+*/
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var integerBreak = function(n) {
+    let pow=0;
+    if(n==2)return 1;
+    else if(n==3)return 2;
+    else if(n==4)return 4;
+    else{
+        let x=Math.floor(n/3);
+        let rem=n%3;
+        if(rem==1){
+            x--;
+            rem+=3;
+        }
+        pow=Math.pow(3,x);
+        if(rem!=0)
+        pow*=rem;
+    }
+    return pow;
+};
