@@ -1,0 +1,28 @@
+##1461. Check If a String Contains All Binary Codes of size K
+##LeetCode link: https://leetcode.com/problems/check-if-a-string-contains-all-binary-codes-of-size-k/?envType=daily-question&envId=2026-02-23
+
+##Approach:
+We slide a window of size k over the binary string and collect all substrings of length k in a Set to keep them unique.
+There are exactly 2^k possible binary codes of length k.
+If the number of unique substrings we found equals 2^k, then the string contains every possible binary code.
+The intuition is counting: instead of generating all codes, we just check how many distinct ones appear.
+If even one code is missing, the set size will be less than 2^k.
+
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {boolean}
+ */
+var hasAllCodes = function(s, k) {
+    let set=new Set();
+    for(let i=0;i<=s.length-k;i++){
+        let sub=s.substring(i,i+k);
+        set.add(sub);
+        //console.log(sub);
+        //console.log(sub.length);
+    }
+    let x=Math.pow(2,k);
+    console.log(x);
+    if(set.size===x)return true;
+    else return false;
+};
