@@ -1,0 +1,27 @@
+## 3847. Find the Score Difference in a Game
+## Leetcode Link: https://leetcode.com/problems/find-the-score-difference-in-a-game/description/\
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var scoreDifference = function(nums) {
+    let f=true;
+    let s1=0;
+    let s2=0;
+    for(let i=0;i<nums.length;i++){
+        if(((i+1)%6==0)&&(nums[i]%2==1)){
+            if(f===true)s1+=nums[i];
+            else s2+=nums[i];
+        }
+        else if(nums[i]%2==1||((i+1)%6==0)&&(nums[i]%2==0)){
+           if(f===true){s2+=nums[i];f=false;}
+            else {s1+=nums[i];f=true;}
+        }
+        else {
+             if(f===true)s1+=nums[i];
+            else s2+=nums[i];
+        }
+    }
+    return s1-s2;
+};
