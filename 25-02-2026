@@ -1,0 +1,39 @@
+##1356. Sort Integers by The Number of 1 Bits
+##Leetcode Link: https://leetcode.com/problems/sort-integers-by-the-number-of-1-bits/?envType=daily-question&envId=2026-02-25
+##Intuition:
+We are sorting based on two conditions:
+
+First priority → number of 1s in binary (bit count)
+
+Second priority → numeric value (ascending)
+
+So each number has a key pair like this:
+
+(number of 1s, actual number)
+
+Then we sort by:
+
+smaller bit count first
+
+if equal → smaller number first
+
+#We can convert number to binary and count:num.toString(2)
+##Time Complexity:
+Sorting → O(n log n)
+Bit counting per comparison → O(log maxValue)
+Overall → O(n log n)
+
+
+
+/**
+ * @param {number[]} arr
+ * @return {number[]}
+ */
+var sortByBits = function(arr) {
+    return arr.sort((a,b)=>{
+        let bitsa=a.toString(2).split("1").length-1;
+        let bitsb=b.toString(2).split("1").length-1;
+        if(bitsa===bitsb)return a-b;
+        return bitsa-bitsb;
+    })
+};
