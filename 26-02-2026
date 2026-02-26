@@ -1,0 +1,45 @@
+#1404. Number of Steps to Reduce a Number in Binary Representation to One
+#Leetcode Link: https://leetcode.com/problems/number-of-steps-to-reduce-a-number-in-binary-representation-to-one/description/?envType=daily-question&envId=2026-02-26
+
+1️ We reduce the binary number to "1" using two operations:
+
+If even → divide by 2
+
+If odd → add 1
+
+2️ In binary, even numbers end with 0, so dividing by 2 just means remove the last bit.
+
+3️ Odd numbers end with 1, so adding 1 causes a carry, turning trailing 1s into 0s until a 0 becomes 1.
+
+4️ Instead of actually modifying the string, we simulate this using a carry variable while scanning from right to left.
+
+5️ If (bit + carry) becomes odd → it takes 2 steps (add + divide).
+If it becomes even → it takes 1 step (divide only).
+
+6️ We process each bit once, count steps, and finally add one more step if a carry remains.
+
+Complexity
+
+Time: O(n)
+
+Space: O(1)
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var numSteps = function(s) {
+    let st=0;
+    let c=0;
+    for(let i=s.length-1;i>0;i--){
+        let x=Number(s[i]);
+        if(x+c==1){
+            st+=2;
+            c=1;
+        }else{
+            st++;
+        }
+    }
+    if(c==1)st++;
+    return st;
+};
