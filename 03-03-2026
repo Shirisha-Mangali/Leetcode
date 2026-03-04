@@ -1,0 +1,29 @@
+1545. Find Kth Bit in Nth Binary String
+Leetcode Link: https://leetcode.com/problems/find-kth-bit-in-nth-binary-string/?envType=daily-question&envId=2026-03-03
+Approach : Simulation
+class Solution {
+    public char findKthBit(int n, int k) {
+         StringBuilder s = new StringBuilder("0");
+
+        for (int i = 1; i < n; i++) {
+
+            if (s.length() >= k) {
+                return s.charAt(k - 1);
+            }
+
+            int currentLength = s.length();
+
+            StringBuilder reversed = new StringBuilder();
+
+            // reverse + invert
+            for (int j = currentLength - 1; j >= 0; j--) {
+                char ch = s.charAt(j);
+                reversed.append(ch == '0' ? '1' : '0');
+            }
+
+            s.append('1').append(reversed);
+        }
+
+        return s.charAt(k - 1);
+    }
+}
