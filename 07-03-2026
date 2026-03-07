@@ -1,0 +1,35 @@
+1784. Check if Binary String Has at Most One Segment of Ones
+LeetCode Link:https://leetcode.com/problems/check-if-binary-string-has-at-most-one-segment-of-ones/description/?envType=daily-question&envId=2026-03-06
+Intuition: 
+The string should contain only one continuous segment of '1's.
+Once a '0' appears, no more '1' should appear after that.
+If we ever see '1' again after a '0', it means there are multiple segments of '1', so we return false.
+
+Approach :
+
+Traverse the string from left to right.
+
+Use a boolean variable zero to remember if we have already seen a '0'.
+
+If the current character is '0', set zero = true.
+
+If the current character is '1' and zero is already true, it means a new segment of '1' started → return false.
+
+Continue scanning the string.
+
+If the loop finishes without finding such a case, return true.
+
+
+class Solution {
+    public boolean checkOnesSegment(String s) {
+        int n=s.length();
+        boolean zero=false;
+        for(int i=0;i<n;i++){
+            char ch=s.charAt(i);
+            if(ch=='0')
+                zero=true;
+            else if(zero)return false;
+        }
+        return true;
+    }
+}
