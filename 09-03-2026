@@ -1,0 +1,16 @@
+3861. Minimum Capacity Box
+Leetcode link: https://leetcode.com/problems/minimum-capacity-box/description/
+
+class Solution {
+    public int minimumIndex(int[] capacity, int itemSize) {
+        int n=capacity.length;
+        int ind=-1;
+        int cap=0;
+        for(int i=0;i<n;i++){
+            if(capacity[i]>=itemSize && ind==-1){ind=i;cap=capacity[i];}
+            else if(cap>capacity[i] &&capacity[i]>=itemSize){ind=i;cap=capacity[i];}
+    }
+    return ind;
+    }
+
+}
