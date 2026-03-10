@@ -1,0 +1,42 @@
+//3862. Find the Smallest Balanced Index
+//Leetcode Link: https://leetcode.com/problems/find-the-smallest-balanced-index/
+# Intuition: 
+We need an index i where sum of left elements = product of right elements.
+
+Instead of recalculating the product every time, we precompute suffix products so the right product can be obtained in O(1).
+
+While scanning the array, we maintain a running prefix sum (leftSum).
+
+Since products grow exponentially and sums grow linearly, the product can overflow long.
+
+So we cap the suffix product at 1e14, because any value larger than that can never equal the prefix sum.
+
+For each index, compare leftSum with suffixProduct[i+1]; if equal, that index is the smallest balanced index.
+TC = O(n)
+SC = O(n)
+
+
+class Solution {
+    public int smallestBalancedIndex(int[] nums) {
+        int n=nums.length;
+        long suffProd[]=new long[n];
+        suffProd[n-1]=nums[n-1];
+        for(int i=n-2;i>=0;i--){
+             if (suffProd[i + 1] > 1e14) {
+                suffProd[i] = (long)1e14 + 1; // cap value
+            } else {
+                suffProd[i] = nums[i] * suffProd[i + 1];
+                if (suffProd[i] > 1e14) suffProd[i] = (long)1e14 + 1;
+            }
+        }
+        long leftSum=0;
+        for(int i=0;i<n;i++){
+            long rightProd=1;
+            if(i+1<n)rightProd=suffProd[i+1];
+            if(leftSum>1e14)return -1;
+            if(leftSum==rightProd)return i;
+            leftSum+=nums[i];
+        }
+    return -1;
+    }
+}
