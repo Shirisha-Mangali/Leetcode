@@ -1,0 +1,49 @@
+3876. Construct Uniform Parity Array II
+Leetcode Link: https://leetcode.com/problems/construct-uniform-parity-array-ii/description/
+
+Observation 1
+If all even or all odd -> return true
+
+Observation 2
+If it's mix of even and odd -> We have to make the even elements into odd by subtracting with odd.
+
+So find the minimum value of odd in the array and try to subtract with each even value and check if subtraction is >=1, if it's not return false
+
+If you're thinking in case of even and odd -> Why can't we make all elements as even ?
+
+So to make an odd element even -> We need to subtract it with an odd element(call this mnodd). If we subtract all the odd elements with mnodd, we'll have even elements but mnodd will still remain odd and there's no way to make this even.
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+
+class Solution {
+    public boolean uniformArray(int[] nums1) {
+        int n=nums1.length;
+        int nums2[]=new int[n];
+        int min=Integer.MAX_VALUE;
+        int o=0;
+        int e=0;
+        int ind=-1;
+        for(int i=0;i<n;i++){
+            if(nums1[i]%2==0)e++;
+            else{
+                o++;
+                if(min>nums1[i]){
+                min=nums1[i];
+                ind=i;
+                }
+            } 
+           
+        }
+        if(e==0||o==0)return true;
+         for(int i=0;i<n;i++){
+            if(ind!=i && (nums1[i]-min)<1)return false;
+        }
+        return true;
+    }
+}
