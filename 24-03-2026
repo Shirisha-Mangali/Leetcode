@@ -1,0 +1,78 @@
+2906. Construct Product Matrix
+Leetcode Link: https://leetcode.com/problems/construct-product-matrix/description/?envType=daily-question&envId=2026-03-24
+
+
+class Solution {
+    public int[][] constructProductMatrix(int[][] grid) {
+        long prod=1;
+        int n=grid.length;
+        int m=grid[0].length;
+        int [][]ans=new int[n][m];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                prod*=grid[i][j];
+            }
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                ans[i][j]=(int)prod/(grid[i][j]);
+                ans[i][j]=ans[i][j]%12345;
+            }
+        }
+        return ans;
+    }
+}
+
+$$ The above code failed because of constraints : Overflow--total product ÷ current element.
+
+So, following approach will prevent overflow
+
+# Intuition:
+To compute each cell’s value, we need the product of all elements except itself.
+Calculating this separately for every cell would be inefficient.
+
+Instead, we observe that the result can be formed by multiplying:
+
+product of all elements before the current cell
+product of all elements after the current cell
+
+This avoids recomputation and eliminates the need for division.
+
+
+
+# Approach:
+Traverse the matrix from bottom-right to top-left to compute suffix products
+Store the suffix product in the result matrix
+Update suffix by multiplying current element (modulo applied)
+Traverse from top-left to bottom-right to compute prefix products
+Multiply stored suffix with prefix
+Update prefix by multiplying current element (modulo applied)
+Use modulo 12345 at each step to handle large values and prevent overflow
+Complexity
+Time complexity: O(n×m)
+
+Space complexity: O(1)
+
+class Solution {
+    public int[][] constructProductMatrix(int[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+        int [][]ans=new int[n][m];
+        int mod=12345;
+        long prefix=1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                ans[i][j]=(int)prefix;
+                prefix=(prefix*grid[i][j])%mod;
+            }
+        }
+        long suffix=1;
+        for(int i=n-1;i>=0;i--){
+            for(int j=m-1;j>=0;j--){
+                ans[i][j]=(int)((long)ans[i][j]*suffix)%mod;
+                suffix=(suffix*grid[i][j])%mod;
+            }
+        }
+        return ans;
+    }
+}
