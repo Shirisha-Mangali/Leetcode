@@ -1,0 +1,64 @@
+3546. Equal Sum Grid Partition I
+Leetcode Link: https://leetcode.com/problems/equal-sum-grid-partition-i/description/?envType=daily-question&envId=2026-03-25
+
+Intuition:
+Compute total sum of grid
+Store row sums and column sums
+Try splitting row-wise → keep adding row sums
+Check: leftSum == total - leftSum
+If not, try column-wise similarly
+If any split satisfies → return true, else false
+
+Formula Thinking: 
+Row split:
+prefixSumRows == total - prefixSumRows
+Column split:
+prefixSumCols == total - prefixSumCols
+
+Time Complexity
+
+ O(m × n)
+
+Space Complexity
+
+O(m + n)
+
+Solution:
+
+class Solution {
+    public boolean canPartitionGrid(int[][] grid) {
+        int m=grid.length;
+        int n=grid[0].length;
+        long []r=new long[m];
+        long []c=new long[n];
+        long total=0;
+        for(int i=0;i<m;i++){
+            long sum=0;
+            for(int j=0;j<n;j++){
+                sum+=grid[i][j];
+            }
+            r[i]=sum;
+            total+=sum;
+        }
+        for(int i=0;i<n;i++){
+            long sum=0;
+            for(int j=0;j<m;j++){
+                sum+=grid[j][i];
+            }
+            c[i]=sum;
+        }
+        long x=0;
+        for(int i=0;i<m;i++){
+            x+=r[i];
+            long rem=total-x;
+            if(rem==x)return true;
+        }
+        x=0;
+        for(int i=0;i<n;i++){
+            x+=c[i];
+            long rem=total-x;
+            if(rem==x)return true;
+        }
+    return false;
+    }
+}
