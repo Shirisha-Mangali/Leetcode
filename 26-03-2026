@@ -1,0 +1,52 @@
+2125. Number of Laser Beams in a Bank
+Leetcode Link: https://leetcode.com/problems/number-of-laser-beams-in-a-bank/description/
+
+
+Intuition (5–6 lines)
+
+1️ A laser beam exists only between two rows that both have devices.
+2️ Also, there must be no devices in between rows → so only consecutive non-empty rows matter.
+3️ Count number of '1's (devices) in each row.
+4️ For two valid rows with counts a and b, beams = a × b (each device connects to all in next row).
+5️ Skip rows with 0 devices (they break the connection chain).
+6️ Keep track of previous non-empty row (prev) and multiply with current (c).
+
+ Why prev * c?
+If:
+
+Row1 → 3 devices  
+Row2 → 2 devices  
+
+Beams:
+
+3 × 2 = 6
+
+Every device in Row1 connects to every device in Row2.
+
+Time Complexity (TC)
+O(m × n)
+Space Complexity (SC)
+O(1)
+
+class Solution {
+    public int numberOfBeams(String[] bank) {
+        int n=bank.length;
+        int ans=0;
+        int prev=0;
+        for(int i=0;i<bank[0].length();i++){
+            if(bank[0].charAt(i)=='1')prev++;
+        }
+
+        for(int i=1;i<n;i++){
+            int c=0;
+            for(int j=0;j<bank[i].length();j++){
+                if(bank[i].charAt(j)=='1')c++;
+            }
+            if(c!=0){
+            ans+=(prev*c);
+            prev=c;
+            }
+        }
+        return ans;
+    }
+}
