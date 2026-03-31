@@ -1,0 +1,60 @@
+2840. Check if Strings Can be Made Equal With Operations II
+Leetcode Link: https://leetcode.com/problems/check-if-strings-can-be-made-equal-with-operations-ii/description/?envType=daily-question&envId=2026-03-30
+You are given two strings s1 and s2, both of length n, consisting of lowercase English letters.
+
+You can apply the following operation on any of the two strings any number of times:
+
+Choose any two indices i and j such that i < j and the difference j - i is even, then swap the two characters at those indices in the string.
+Return true if you can make the strings s1 and s2 equal, and false otherwise.\
+
+Example 1:
+Input: s1 = "abcdba", s2 = "cabdab"
+Output: true
+Explanation: We can apply the following operations on s1:
+- Choose the indices i = 0, j = 2. The resulting string is s1 = "cbadba".
+- Choose the indices i = 2, j = 4. The resulting string is s1 = "cbbdaa".
+- Choose the indices i = 1, j = 5. The resulting string is s1 = "cabdab" = s2.
+
+Example 2:
+Input: s1 = "abe", s2 = "bea"
+Output: false
+Explanation: It is not possible to make the two strings equal.
+
+#Intuition:
+1️ Swaps are only allowed within same parity indices
+2️ So string splits into 2 groups: even & odd
+3️ You can freely rearrange inside each group
+4️ So compare sorted characters of even positions
+5️ And compare sorted characters of odd positions
+
+
+class Solution {
+    public boolean checkStrings(String s1, String s2) {
+        int n=s1.length();
+        int n1=(n+1)/2;
+        int n2=n/2;
+    
+        char []ch1=new char[n1];
+        char []ch2=new char[n1];
+        char []ch3=new char[n2];
+        char []ch4=new char[n2];
+        int e=0,o=0;
+        for(int i=0;i<n;i++){
+            if(i%2==0){
+                ch1[e]=s1.charAt(i);
+                ch2[e]=s2.charAt(i);
+                e++;
+            }else{
+                ch3[o]=s1.charAt(i);
+                ch4[o]=s2.charAt(i);
+                o++;
+            }
+        }
+        Arrays.sort(ch1);
+        Arrays.sort(ch2);
+        Arrays.sort(ch3);
+        Arrays.sort(ch4);
+        System.out.println(ch1);
+        return (Arrays.equals(ch1,ch2) && Arrays.equals(ch3,ch4));
+    }
+}
