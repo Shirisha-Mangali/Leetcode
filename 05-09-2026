@@ -1,0 +1,35 @@
+3904. Smallest Stable Index II
+
+Approach : Prefix Sum
+create 2 two arrays : minArr, mxArr to find the min and max element at each index.
+Iterate through the array and at each index calcualte mx[i]-mn[i] and 
+check if mx[i]-mn[i]<=k then this will the stable index return immediately
+if no such stable index found return -1
+
+Solution:
+class Solution {
+    public int firstStableIndex(int[] nums, int k) {
+        int ind=-1;
+        int n=nums.length;
+        int maxArr[]=new int[n];
+        int minArr[]=new int[n];
+         maxArr[0]=nums[0];
+         minArr[n-1]=nums[n-1];
+        for(int i=1;i<n;i++){
+            if(nums[i]>maxArr[i-1])
+            maxArr[i]=nums[i];
+            else
+            maxArr[i]=maxArr[i-1];
+        }
+         for(int i=n-2;i>=0;i--){
+            if(nums[i]<minArr[i+1])
+            minArr[i]=nums[i];
+            else
+            minArr[i]=minArr[i+1];
+        }
+        for(int i=0;i<n;i++){
+            if(maxArr[i]-minArr[i]<=k)return i;
+        }
+        return -1;
+    }
+}
